@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+        <constant name="struts.devMode" value="true" />
+
+        <package name="default" namespace="/" extends="struts-default">
+                <interceptors>
+                        <interceptor name="login" class="com.fengfeng.interceptor.LoginInterceptor">
+                        </interceptor>
+                        <interceptor-stack name="myDefaultStack">
+                        <interceptor-ref name="login"></interceptor-ref>
+                                               <interceptor-ref name="defaultStack"></interceptor-ref>
+                                            </interceptor-stack>
+                </interceptors>
+                <default-interceptor-ref name="myDefaultStack"></default-interceptor-ref>
+
+
+                <default-action-ref name="index"></default-action-ref>
+            <global-results>
+                <result name="login" type="redirect">login.action</result>
+            </global-results>
+
+            <action name="index" class="com.fengfeng.home.Home">
+                        <result>/home.jsp</result>
+                </action>
+                <action name="login" class="com.fengfeng.login.Login">
+                    <result name="success" type="redirect">index.action</result>
+                        <result name="error">/login.jsp</result>
+                </action>
+        </package>
+</struts>
